@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Modul2
 {
-    internal class Opgave2
+    internal class Opgave6
     {
     }
 }

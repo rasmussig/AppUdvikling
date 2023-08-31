@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 namespace Modul2
 {
     internal class Opgave4
-    { 
+    {
     }
 }
