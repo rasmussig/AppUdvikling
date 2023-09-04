@@ -1,10 +1,10 @@
-﻿namespace Modul2
+﻿namespace Modul3
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            new Opgave3().Run();
+            Console.WriteLine("Hello, World!");
         }
     }
 }
