@@ -10,31 +10,36 @@ using System.Threading.Tasks;
 namespace Modul2
 {
     internal class Opgave4
-    { public void Run()
+    {
+        public void Run()
         {
-            Console.WriteLine("Skriv et ord, vi tjekker om det er et palindrom: ");
-            string input = Console.ReadLine();
-            string cleanedInput = input.ToLower(); // Dette gør vi for at sikre, at alt er lowercase
 
-            bool IsPalindrom (string s)
-            {
-                string cleanedInput = s.ToLower(); 
-                string reversedInput = "";
+            while (true)
+            { //Denne linje gør at koden ikke stopper
+                Console.WriteLine("Skriv et ord, vi tjekker om det er et palindrom: ");
+                string input = Console.ReadLine();
+                string cleanedInput = input.ToLower(); // Dette gør vi for at sikre, at alt er lowercase
 
-                for (int i = cleanedInput.Length - 1; i >=0; i--)
+                bool IsPalindrom(string s)
                 {
-                    reversedInput += cleanedInput[i];
+                    string cleanedInput = s.ToLower();
+                    string reversedInput = "";
+
+                    for (int i = cleanedInput.Length - 1; i >= 0; i--)
+                    {
+                        reversedInput += cleanedInput[i];
+                    }
+                    return cleanedInput == reversedInput;
                 }
-                return cleanedInput == reversedInput;
-            }
-            
-            if (IsPalindrom(cleanedInput))
-            {
-                Console.WriteLine("Dette er et palindrom!");
-            }
-            else
-            {
-                Console.WriteLine("Dette er ikke et palindrom.");
+
+                if (IsPalindrom(cleanedInput))
+                {
+                    Console.WriteLine("Dette er et palindrom!");
+                }
+                else
+                {
+                    Console.WriteLine("Dette er ikke et palindrom.");
+                }
             }
         }
     }
