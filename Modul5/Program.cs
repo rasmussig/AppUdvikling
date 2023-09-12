@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
-            new Opgave1().Run();
+            new Opgave1_Ole().Run();
         }
     }
 }
