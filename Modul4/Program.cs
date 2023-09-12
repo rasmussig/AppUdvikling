@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        new Opgave3().Run();
+        new Opgave2().Run();
        
     }
 
