@@ -2,17 +2,27 @@
 using System;
 namespace Modul6
 {
-    public class Employee
+    public class employee
     {
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string Email { get; set; }
-        public int TaxDeduction { get; set; }
-        public int TaxPrecentage { get; set; }
+        public string name { get; set; }
+        public string address { get; set; }
+        public string email { get; set; }
+        public decimal deduction { get; set; }
+        public decimal drawPercentage { get; set; }
+        public bool hasLunch { get; set; }
+        public bool hasGiftBox { get; set; }
+        public bool isFullTime { get; set; }
 
-        public bool IsMemberOfLunch { get; set; } = false;
-        public bool IsMemberGiftbox { get; set; } = false;
-
-        public virtual int Salary { get; }
+        // Opgave b) Metode til udskrivning af lønseddel
+        public virtual void PrintPaySlip()
+        {
+            Console.WriteLine($"Navn: {name}");
+            Console.WriteLine($"Adresse: {address}");
+            Console.WriteLine($"Email: {email}");
+            Console.WriteLine($"Fradrag: {deduction}");
+            Console.WriteLine($"Trækprocent: {drawPercentage}%");
+            Console.WriteLine($"Frokostordning: {(hasLunch ? "Ja" : "Nej")}");
+            Console.WriteLine($"Gavekasse: {(hasGiftBox ? "Ja" : "Nej")}");
+        }
     }
 }
