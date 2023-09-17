@@ -10,13 +10,13 @@ namespace Modul3
     { public void Run ()
         {
             Console.WriteLine("Indtast antal tal: ");
-            int antalTal = int.Parse(Console.ReadLine()); // Her kan også bruges: Convert.ToInt32(Console.ReadLine());
+            int antalTal = Convert.ToInt32(Console.ReadLine()); // Her kan også bruges: Convert.ToInt32(Console.ReadLine());
             int[] talArray = new int[antalTal]; // Antallet af tal sættes til arr længde
 
             for (int i = 0; i < antalTal; i++) // Forløkke som gør hvert input af tal ryger ind i arr.
             {
                 Console.Write($"Indtast nu tal nummer {i + 1}: ");
-                talArray[i] = int.Parse(Console.ReadLine());    
+                talArray[i] = Convert.ToInt32(Console.ReadLine());    
             }
 
             double gennemsnit = average(talArray);
