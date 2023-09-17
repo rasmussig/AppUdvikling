@@ -4,8 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
-            new Opgave1_Ole().Run();
+           
+            new Opgave2_Version2().Run();
         }
     }
 }
