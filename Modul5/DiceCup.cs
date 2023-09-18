@@ -41,7 +41,7 @@ namespace Modul5
             foreach (var dice in mDices)
             {
                 results += $"Terning: {diceNumber}, Øjne: {dice.Eyes}\n"; // Denne metode returnerer en tekststreng, der viser resultaterne af rulningen for begge terninger, inklusive størrelsen på terningerne og det antal øjne, de viser.
-                diceNumber++;            
+                diceNumber++;
             }
             return results;
         }

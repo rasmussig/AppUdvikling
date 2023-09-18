@@ -27,5 +27,5 @@ namespace Modul5
             Console.WriteLine($"Resultater for terninger: \n{diceResults}");
         }
     }
-        
+
 }

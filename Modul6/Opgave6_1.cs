@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
@@ -37,10 +38,13 @@ namespace Modul6
                 isFullTime = false
             },
   };
+            // Opgave 7.1
+            employees.Sort();
 
             Console.WriteLine("Vil du udskrive lønsedler for alle (alle), fuldtidsansatte (fuldtid), deltidsansatte (deltid), eller konsulenter (konsulent)?");
-            string choice = Console.ReadLine();
-            Console.WriteLine("\n---------------------------\n");
+            string choice = Console.ReadLine();        
+           
+            decimal totalTax = 0;
 
             foreach (employee emp in employees)
             {
@@ -50,8 +54,16 @@ namespace Modul6
                 {
                     emp.PrintPaySlip();
                     Console.WriteLine("\n---------------------------\n");
-                }
+
+                    decimal tax = emp.PrintTax();
+                    Console.WriteLine($"Skat: {tax} kr");
+                    Console.WriteLine("\n---------------------------\n");
+
+                    totalTax += emp.PrintTax();
+                } 
             }
+
+            Console.WriteLine($"Den samlede skat for alle ansatte er: {totalTax}");
 
             Console.ReadKey();
             Console.WriteLine("Enter a key to exit...");

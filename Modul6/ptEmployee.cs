@@ -39,5 +39,13 @@ namespace Modul6
             Console.WriteLine($"Antal timer arbejdet: {hoursWorked}");
             Console.WriteLine($"Total løn: {calculateSalary()}");
         }
+        public override decimal PrintTax()
+        {
+            decimal totalSalary = calculateSalary();
+            decimal taxableIncome = totalSalary - deduction;
+            decimal tax = 0.28m * taxableIncome; // 28% skat
+            return tax;
+        }
+
     }
 }
