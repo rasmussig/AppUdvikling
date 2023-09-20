@@ -23,6 +23,7 @@ namespace Modul7
                 random = new Random();               
             }
 
+        //Skal være virtual for at vi kan ændre metoden i underklasserne
             public virtual void Roll()
             {
                 eyes = random.Next(1, size + 1);
