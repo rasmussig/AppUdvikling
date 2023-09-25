@@ -4,15 +4,32 @@
 
 <h1>Counter</h1>
 
-<p role="status">Current count: @currentCount</p>
+@{
+    string colorStyle = "black"; // Standardfarve
+    if (currentCount == 8 || randomNumber ==8)
+    {
+        colorStyle = "red"; // Ændrer farven til rød, hvis currentCount er lig med 8
+    }
+}
+
+<p>Current count: <a style="color: @colorStyle">@currentCount</a></p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<br>
+
+<p>Tilfældigt tal mellem 0 og <a style="color: @colorStyle">@currentCount:<br /> @randomNumber</a></p>
+
 @code {
     private int currentCount = 0;
+    private int randomNumber = 0; // Variabel til det tilfældige tal
+    private Random random = new Random(); //Opretter en ny instans af Random
+
 
     private void IncrementCount()
     {
         currentCount++;
+        randomNumber = random.Next(currentCount + 1); 
+
     }
 }
