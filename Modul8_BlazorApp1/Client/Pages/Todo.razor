@@ -1,0 +1,46 @@
+﻿@page "/todo"
+@inject Blazored.LocalStorage.ILocalStorageService localStore
+
+
+<PageTitle>Todo</PageTitle>
+
+<h3>Todo (@todos.Count(todo => !todo.IsDone))</h3>
+
+
+<input placeholder="Something todo" @bind="newTodo" /> <!-- Inputfelt til at indtaste nye opgaver -->
+<button @onclick="AddTodo">Add todo</button> <!-- Knappen til at tilføje en ny opgave -->
+
+<ul>
+    @foreach (var todo in todos)
+    {
+        <li>
+            <input type="checkbox" @bind="todo.IsDone" /> <!-- Checkbox til at markere en opgave som færdig/ufærdig -->
+            <input @bind="todo.Title" /> <!-- Inputfelt til at redigere opgavens titel -->
+        </li>
+    }
+</ul>
+
+@code {
+    private string? newTodo; // En variable til at holde den nye opgave.
+
+    private List<TodoItem> todos = new(); //En liste til at holde alle opgaver
+    private void AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            todos.Add(new TodoItem { Title = newTodo }); // Tilføjer en ny opgave til listen med den indtastede titel
+            newTodo = string.Empty; // Nulstiller inputfeltet til en tom streng
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
