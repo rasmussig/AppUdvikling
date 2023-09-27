@@ -3,10 +3,22 @@
 @page "/mydices"
 <h3>My Dices</h3>
 
-Hello, welcome to the big enterprise site for dices
 
-<p>My name is @name</p>
+    <p>Første kast: @dice1Result</p>
+    <p>Andet kast: @dice2Result</p>
+
+
+<button class="btn btn-primary" @onclick="RollDice">Kast terningerne</button>
+
 
 @code {
-    private string name = "Anders And"; //her er en kommentar i koden
+    private int dice1Result;
+    private int dice2Result;
+    private readonly Random random = new Random();
+
+    private void RollDice()
+    {
+        dice1Result = random.Next(1, 7);
+        dice2Result = random.Next(1, 7);
+    }
 }
