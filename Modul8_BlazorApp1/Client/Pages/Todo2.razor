@@ -1,0 +1,132 @@
+﻿@page "/todo2"
+@inject Blazored.LocalStorage.ILocalStorageService localStore
+@using Modul8_BlazorApp1.Client.Model
+
+<PageTitle>Todo2</PageTitle>
+
+<h1>Todo (@todos.Count(todo => !todo.IsDone))</h1>  <!--Overskriften som også tæller hvor mange Todo der er markeret som done-->
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Titel</th>
+            <th>Prioritet</th>
+            <th>Done</th>
+            <th>Slet</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var todo in todos)
+    {
+            @if (!hideDone || !todo.IsDone)
+            {
+        <tr>
+            <td>@todo.Title</td>
+                <td>
+                    <InputSelect id="Priority" @bind-Value="todo.Priority" _bl_4>
+                <option value="1">Høj</option>
+                <option value="2">Middel</option>
+                <option value="3">Lav</option></InputSelect></td>
+
+                <td>
+                    <InputCheckbox @bind-Value="todo.IsDone"
+                    @bind-Value:after="() => onToDoChanged(todo)" />
+                </td>
+                <td> <svg xmlns="http://www.w3.org/2000/svg" @onclick="() => DeleteToDo(todo)" width="24" height="24" viewBox="0 0 8 8"><path fill="#900" d="M4 0C1.79 0 0 1.79 0 4s1.79 4 4 4s4-1.79 4-4s-1.79-4-4-4zM2.5 1.78L4 3.28l1.5-1.5l.72.72L4.72 4l1.5 1.5l-.72.72L4 4.72l-1.5 1.5l-.72-.72L3.28 4l-1.5-1.5l.72-.72z" /></svg></td>
+        </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div class="row mx-md-n2">
+    <div class="col px-md-2">
+        <label for="hideDone">Skjul done elementer</label>
+        <input id="hideDone" type="checkbox" @bind="hideDone" _bl_6="">
+    </div>
+    <div class="col px-md-2">
+        <button class="btn btn-outline-primary float-end" @onclick="SortByPriority">Sorter</button>
+        <button class="btn btn-outline-primary float-end" @onclick="UpdateLocalStorage">Save</button>
+        <button class="btn btn-outline-primary float-end" @onclick="ClearLocalStorage">Clear</button>
+    </div>
+</div>
+
+<h3>Add new todo-item</h3>  <!--Overskriften som også tæller hvor mange Todo der er markeret som done-->
+
+
+<input placeholder="Something todo" @bind="newTodo" /> <!-- Inputfelt til at indtaste nye opgaver -->
+<button @onclick="AddTodo">Add todo</button> <!-- Knappen til at tilføje en ny opgave -->
+
+
+@code {
+    private string? newTodo; //Variabel som skal holde styr på det brugeren ønsker at tilføje
+
+    private List<ToDoItem> todos = new(); // Opretter en liste af objekterne "ToDoItem" og smækker dem i en liste kaldet "todos"
+
+    private const string todoKey = "todo"; // OLE jeg fatter ik helt 100 hvad den her gør.
+
+    protected override async Task OnInitializedAsync() //Denne metode indlæser tidligere gemte "Todos-lister" vha. LocalStorage
+    {
+
+        var x = await localStore.GetItemAsync<List<ToDoItem>>(todoKey);
+        if (x != null)
+            todos = x;
+    }
+
+    private void AddTodo()  //Metoden som bruges til at tilføje nye ToDoItem's til vores ToDo-liste
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            todos.Add(new ToDoItem { Title = newTodo });
+            newTodo = string.Empty;
+        }
+    }
+
+    public async void UpdateLocalStorage()  //Her er funktionaliteten som gemmer todos-listen i local Storage
+    {
+        Console.WriteLine("UpdateLocalStorage");
+        await localStore.SetItemAsync(todoKey, todos);
+    }
+
+    public async void ClearLocalStorage()  //Denne metode "Clear" vores local storage
+    {
+        todos.Clear();
+        await localStore.RemoveItemAsync(todoKey);
+        await localStore.ClearAsync();
+    }
+
+    public void onToDoChanged(ToDoItem todo)  //Denne metode udskriver blot til konsollen når vi ændre i check-box
+    {
+        Console.WriteLine("onToDoChanged " + todo.Title);
+
+    }
+
+    private void DeleteToDo(ToDoItem todo) //Denne metode bruger vi til vores seje knap, som fjerne TodoItem fra ToDo-listen
+    {
+        todos.Remove(todo);
+    }
+
+    private void SortByPriority()
+    {
+        todos = todos.OrderBy(todo => todo.Priority).ToList();
+    }
+
+    private bool hideDone = false;
+
+    private void ToggleHideDone()
+    {
+        hideDone = !hideDone;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+

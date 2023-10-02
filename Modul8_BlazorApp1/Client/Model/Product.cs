@@ -14,6 +14,6 @@ namespace Modul8_BlazorApp1.Client.Model
         public string Description { get; set; }
         public bool IsPublished { get; set; }
         public DateTime PublishedDate { get; set; } = DateTime.Now;
-        public string Category { get; set; }
+        public string Category { get; set; } = "None";
     }
 }
