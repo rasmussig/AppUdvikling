@@ -28,6 +28,7 @@
                 <option value="1">Høj</option>
                 <option value="2">Middel</option>
                 <option value="3">Lav</option></InputSelect></td>
+                <!--Her tildeles hver option en value, som er det der sorteres efter i metodenn: SortByPriority-->
 
                 <td>
                     <InputCheckbox @bind-Value="todo.IsDone"
@@ -107,9 +108,11 @@
         todos.Remove(todo);
     }
 
-    private void SortByPriority()
+    private void SortByPriority() // Metoden til at sortere vores priority
     {
-        todos = todos.OrderBy(todo => todo.Priority).ToList();
+        // todos = todos.OrderBy(todo => todo.Priority).ToList();
+        todos.Sort();
+        // OrderBy sortere altid stigende
     }
 
     private bool hideDone = false;
