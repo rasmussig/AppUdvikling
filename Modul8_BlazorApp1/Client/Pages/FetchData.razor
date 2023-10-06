@@ -8,6 +8,18 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
+<button @onclick="ToggleTemperatureUnit">Switch from Celcius to Farenheit</button>
+<button @onclick="ShowMoreForecasts">Show 5 more</button>
+<button @onclick="ShowMoreLess">Show 5 less</button>
+<br />
+<br />
+Input how many weatherforecasts you want to see.
+<input type="number" @bind="UserInput" />
+<button @onclick="UpdateAmount2">Update</button>
+
+a
+
+
 @if (forecasts == null)
 {
     <p><em>Loading...</em></p>
@@ -18,19 +30,20 @@ else
         <thead>
             <tr>
                 <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
+                <th>Temp. (@temperatureUnit)</th>
                 <th>Summary</th>
+                <th>Location</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+             @for (int i = 0; i < forecasts.Length; i++)
             {
-                <tr>
+                var forecast = forecasts[i];
+                <tr style="background-color: @(i % 2 == 1 ? "gray" : "white")">
                     <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td>@GetTemperatureInUnit(forecast)</td>
+                    <td style="color: @(SummaryTextColor(forecast.Summary))">@forecast.Summary</td>
+                    <td>@forecast.Location</td>
                 </tr>
             }
         </tbody>
@@ -39,9 +52,94 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
+    private string temperatureUnit = "Celsius";
+    private int UserInput = 10;
+
+
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}");
     }
+
+    private string SummaryTextColor(string summary)
+    {
+        switch (summary)
+        {
+            case "Freezing":
+            case "Cold":
+                return "blue"; // Blå for "Freezing" og "Cold"
+            case "Hot":
+            case "Warm":
+                return "darkred"; // Mørkerød for "Hot" og "Warm"
+            default:
+                return "green"; // Grøn for alle andre værdier
+        }
+
+        /*Ovenstående kan også skrives som if-statement:
+        if (summary == "Freezing" || summary == "Cold")
+              {
+              return "blue"; // Blå baggrund for "Freezing" og "Cold"
+               }
+               else if (summary == "Hot" || summary == "Warm")
+              {
+              return "darkred"; // Mørkerød baggrund for "Hot" og "Warm"
+               }
+               else
+               {
+               return "green"; // Grøn baggrund for alle andre værdier
+    }       */
+
+    }
+
+    private void ToggleTemperatureUnit()
+    {
+        if (temperatureUnit == "Celsius")
+        {
+            temperatureUnit = "Fahrenheit";
+        }
+        else
+        {
+            temperatureUnit = "Celsius";
+        }
+    }
+
+    private int GetTemperatureInUnit(WeatherForecast forecast)
+    {
+        if (temperatureUnit == "Celsius")
+        {
+            return forecast.TemperatureC;
+        }
+        else
+        {     
+            return forecast.TemperatureF;
+        }
+    }
+
+    private async void ShowMoreForecasts()
+    {
+        UserInput += 5;
+        await UpdateAmount();
+
+    }
+
+    private async void ShowMoreLess()
+    {
+        UserInput -= 5;
+        await UpdateAmount();
+
+    }
+
+    private async Task UpdateAmount()
+    {
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}");
+        StateHasChanged();
+    }
+
+    private async Task UpdateAmount2()
+    {
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}");
+        StateHasChanged();
+    }
+    
 }
