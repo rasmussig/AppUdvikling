@@ -39,12 +39,12 @@ namespace Modul8_BlazorApp1.Server.Controllers
 
         [HttpGet]
         [Route("{n:int}")]
-        public IEnumerable<WeatherForecast> GetAmount(int n)
+        public IEnumerable<WeatherForecast> GetAmount(int n, int minTemp = -20, int maxTemp = 55)
         {
             return Enumerable.Range(1, n).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
+                TemperatureC = Random.Shared.Next(minTemp, maxTemp+1),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)],
                 Location = Locations[Random.Shared.Next(Locations.Length)]
             })

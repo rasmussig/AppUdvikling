@@ -9,15 +9,24 @@
 <p>This component demonstrates fetching data from the server.</p>
 
 <button @onclick="ToggleTemperatureUnit">Switch from Celcius to Farenheit</button>
-<button @onclick="ShowMoreForecasts">Show 5 more</button>
-<button @onclick="ShowMoreLess">Show 5 less</button>
 <br />
 <br />
 Input how many weatherforecasts you want to see.
 <input type="number" @bind="UserInput" />
 <button @onclick="UpdateAmount2">Update</button>
+<br />
 
-a
+<button @onclick="ShowMoreForecasts">Show 5 more</button>
+<button @onclick="ShowMoreLess">Show 5 less</button>
+<br />
+<br />
+
+<p>Here you can apply, a minimum and maximum temprature</p>
+
+<input type="number" @bind="MinTemperature" placeholder="Minimum temprature">
+<input type="number" @bind="MaxTemperature" placeholder="Maksimum temprature">
+<button @onclick="ApplyTemperatureFilter">Use filter</button>
+
 
 
 @if (forecasts == null)
@@ -55,6 +64,8 @@ else
     private string temperatureUnit = "Celsius";
     private int UserInput = 10;
 
+    private int MinTemperature = -20; 
+    private int MaxTemperature = 55;  
 
 
     protected override async Task OnInitializedAsync()
@@ -141,5 +152,12 @@ else
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}");
         StateHasChanged();
     }
+
+    private async Task ApplyTemperatureFilter()
+    {
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}?minTemp={MinTemperature}&maxTemp={MaxTemperature}");
+        StateHasChanged();
+    }
+
     
 }
