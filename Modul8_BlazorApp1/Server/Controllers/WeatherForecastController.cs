@@ -12,7 +12,7 @@ namespace Modul8_BlazorApp1.Server.Controllers
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-        private static readonly string[] Locations = new[]
+        private static readonly string[] Locations = new[] // OPG 12.1.1 - Et string-array af bynavne
        {
         "København", "Aarhus", "Odense", "Aalborg", "Esbjerg", "Randers", "Kolding", "Horsens", "Vejle", "Roskilde"
     };
@@ -32,12 +32,12 @@ namespace Modul8_BlazorApp1.Server.Controllers
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
                 TemperatureC = Random.Shared.Next(-20, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)],
-                Location = Locations[Random.Shared.Next(Locations.Length)]
+                Location = Locations[Random.Shared.Next(Locations.Length)] // OPG 12.1.1. Vælger en tilfældig af bynavnene i arrayet.
             })
             .ToArray();
         }
 
-        [HttpGet]
+        [HttpGet] //OPG 12.1.7 og 8 og 9. Ny get som bruges når vi skal bruge userinput, og bruge tempratur filteret
         [Route("{n:int}")]
         public IEnumerable<WeatherForecast> GetAmount(int n, int minTemp = -20, int maxTemp = 55)
         {

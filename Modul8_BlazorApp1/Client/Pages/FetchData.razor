@@ -8,7 +8,7 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-<button @onclick="ToggleTemperatureUnit">Switch from Celcius to Farenheit</button>
+<button @onclick="ToggleTemperatureUnit">Switch from Celcius to Farenheit</button> <!-- OPG 12.1.2. Knap hvor man kan skifte mellem celcius og fareheit-->
 <br />
 <br />
 Input how many weatherforecasts you want to see.
@@ -16,7 +16,7 @@ Input how many weatherforecasts you want to see.
 <button @onclick="UpdateAmount2">Update</button>
 <br />
 
-<button @onclick="ShowMoreForecasts">Show 5 more</button>
+<button @onclick="ShowMoreForecasts">Show 5 more</button> <!-- OPG 12.1.7. To knapper som kalder funktioner-->
 <button @onclick="ShowMoreLess">Show 5 less</button>
 <br />
 <br />
@@ -39,7 +39,7 @@ else
         <thead>
             <tr>
                 <th>Date</th>
-                <th>Temp. (@temperatureUnit)</th>
+                <th>Temp. (@temperatureUnit)</th> <!-- OPG 12.1.2. Denne viser hvilken tempratur er den nuværende -->
                 <th>Summary</th>
                 <th>Location</th>
             </tr>
@@ -48,10 +48,10 @@ else
              @for (int i = 0; i < forecasts.Length; i++)
             {
                 var forecast = forecasts[i];
-                <tr style="background-color: @(i % 2 == 1 ? "gray" : "white")">
+                <tr style="background-color: @(i % 2 == 1 ? "gray" : "white")"> <!-- OPG 12.1.2 Hver anden bliver grå -->
                     <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@GetTemperatureInUnit(forecast)</td>
-                    <td style="color: @(SummaryTextColor(forecast.Summary))">@forecast.Summary</td>
+                    <td>@GetTemperatureInUnit(forecast)</td> <!-- OPG 12.1.2. Denne bruger funktionen til at hente tempraturen. -->
+                    <td style="color: @(SummaryTextColor(forecast.Summary))">@forecast.Summary</td> <!-- OPG 12.1.5. Denne bruger funktionen til at farvelæg "Summery" -->
                     <td>@forecast.Location</td>
                 </tr>
             }
@@ -61,8 +61,8 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
-    private string temperatureUnit = "Celsius";
-    private int UserInput = 10;
+    private string temperatureUnit = "Celsius"; //OPG 12.1.2 
+    private int UserInput = 10;  // OPG 12.1.7. Variabel til at vise 5 mere eller 5 færre, men 10 som standard.
 
     private int MinTemperature = -20; 
     private int MaxTemperature = 55;  
@@ -73,7 +73,7 @@ else
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}");
     }
 
-    private string SummaryTextColor(string summary)
+    private string SummaryTextColor(string summary) // Funktionen som farvelægger vores "Summery"
     {
         switch (summary)
         {
@@ -103,7 +103,7 @@ else
 
     }
 
-    private void ToggleTemperatureUnit()
+    private void ToggleTemperatureUnit() // OPG 12.1.2. Denne viser blot teksten om vores nuværende tempratur
     {
         if (temperatureUnit == "Celsius")
         {
@@ -115,7 +115,7 @@ else
         }
     }
 
-    private int GetTemperatureInUnit(WeatherForecast forecast)
+    private int GetTemperatureInUnit(WeatherForecast forecast) // OPG 12.1.2. Denne henter enten tempraturen i Celcius eller farenheit, fra vores klasse
     {
         if (temperatureUnit == "Celsius")
         {
@@ -127,21 +127,21 @@ else
         }
     }
 
-    private async void ShowMoreForecasts()
+    private async void ShowMoreForecasts() //OPG 12.1.7. Opdatere vores userinput, når man trykker 5 mere.
     {
         UserInput += 5;
         await UpdateAmount();
 
     }
 
-    private async void ShowMoreLess()
+    private async void ShowMoreLess() //OPG 12.1.7. Opdatere vores userinput, når man trykker 5 færre.
     {
         UserInput -= 5;
         await UpdateAmount();
 
     }
 
-    private async Task UpdateAmount()
+    private async Task UpdateAmount() //OPG 12.1.7. Funktionen som henter det nye antal af vejrudsigter fra controlleren
     {
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}");
         StateHasChanged();
