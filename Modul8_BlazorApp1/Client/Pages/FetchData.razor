@@ -70,7 +70,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}");
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}/{MinTemperature}/{MaxTemperature}");
     }
 
     private string SummaryTextColor(string summary) // Funktionen som farvelægger vores "Summery"
@@ -155,7 +155,7 @@ else
 
     private async Task ApplyTemperatureFilter()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}?minTemp={MinTemperature}&maxTemp={MaxTemperature}");
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}/{MinTemperature}/{MaxTemperature}");
         StateHasChanged();
     }
 

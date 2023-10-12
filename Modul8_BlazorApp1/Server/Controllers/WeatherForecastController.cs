@@ -38,7 +38,7 @@ namespace Modul8_BlazorApp1.Server.Controllers
         }
 
         [HttpGet] //OPG 12.1.7 og 8 og 9. Ny get som bruges når vi skal bruge userinput, og bruge tempratur filteret
-        [Route("{n:int}")]
+        [Route("{n:int}/{minTemp:int}/{maxTemp:int}")]
         public IEnumerable<WeatherForecast> GetAmount(int n, int minTemp = -20, int maxTemp = 55)
         {
             return Enumerable.Range(1, n).Select(index => new WeatherForecast
