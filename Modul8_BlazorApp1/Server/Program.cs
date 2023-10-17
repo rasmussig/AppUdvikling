@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using Modul8_BlazorApp1.Server.Repositories;
 
 namespace Modul8_BlazorApp1
 {
@@ -12,6 +13,8 @@ namespace Modul8_BlazorApp1
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
+
+            builder.Services.AddSingleton<IShoppingRepository, ShoppingRepositoryInMemory>();
 
             var app = builder.Build();
 
