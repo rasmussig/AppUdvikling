@@ -143,13 +143,13 @@ else
 
     private async Task UpdateAmount() //OPG 12.1.7. Funktionen som henter det nye antal af vejrudsigter fra controlleren
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}");
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}/{MinTemperature}/{MaxTemperature}");
         StateHasChanged();
     }
 
     private async Task UpdateAmount2()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}");
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}/{MinTemperature}/{MaxTemperature}");
         StateHasChanged();
     }
 
