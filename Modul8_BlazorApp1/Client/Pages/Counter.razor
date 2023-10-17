@@ -6,9 +6,17 @@
 
 @{
     string colorStyle = "black"; // Standardfarve
-    if (currentCount == 8 || randomNumber ==8)
+    if (currentCount == 8)
     {
         colorStyle = "red"; // Ændrer farven til rød, hvis currentCount er lig med 8
+    }
+}
+
+@{
+    string colorStyle2 = "black"; // Standardfarve
+    if (randomNumber == 8)
+    {
+        colorStyle2 = "red"; // Ændrer farven til rød, hvis currentCount er lig med 8
     }
 }
 
@@ -16,9 +24,10 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
-<br>
-
-<p>Tilfældigt tal mellem 0 og <a style="color: @colorStyle">@currentCount:<br /> @randomNumber</a></p>
+<br/>
+<br />
+    
+<p>Random number between 0 and the current count <a style="color: @colorStyle">@currentCount</a> <br /> Random number: <a style="color: @colorStyle2">@randomNumber</a></p>
 
 @code {
     private int currentCount = 0;
