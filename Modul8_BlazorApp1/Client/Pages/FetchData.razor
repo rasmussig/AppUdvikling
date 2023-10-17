@@ -13,7 +13,7 @@
 <br />
 Input how many weatherforecasts you want to see.
 <input type="number" @bind="UserInput" />
-<button @onclick="UpdateAmount2">Update</button>
+<button @onclick="UpdateAmount">Update</button>
 <br />
 
 <button @onclick="ShowMoreForecasts">Show 5 more</button> <!-- OPG 12.1.7. To knapper som kalder funktioner-->
@@ -35,6 +35,14 @@ Input how many weatherforecasts you want to see.
 }
 else
 {
+    @if (UserInput < 0)
+    {
+        <br />
+        <br />
+        <p style="color: red"><strong>Antallet af vejrudsigter kan ikke være mindre end 0.</strong></p>
+    } else
+    {
+        
     <table class="table">
         <thead>
             <tr>
@@ -57,6 +65,7 @@ else
             }
         </tbody>
     </table>
+    }
 }
 
 @code {
@@ -143,20 +152,28 @@ else
 
     private async Task UpdateAmount() //OPG 12.1.7. Funktionen som henter det nye antal af vejrudsigter fra controlleren
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}/{MinTemperature}/{MaxTemperature}");
-        StateHasChanged();
-    }
-
-    private async Task UpdateAmount2()
-    {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}/{MinTemperature}/{MaxTemperature}");
-        StateHasChanged();
+        if (UserInput >= 0) // Denne forhindre siden crasher, hvis input er under 0.
+        {
+            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}/{MinTemperature}/{MaxTemperature}");
+            StateHasChanged();
+        }
+        else
+        {
+            // Vis en fejlmeddelelse eller foretag en passende handling
+        }
     }
 
     private async Task ApplyTemperatureFilter()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}/{MinTemperature}/{MaxTemperature}");
-        StateHasChanged();
+        if (UserInput >= 0)
+        {
+            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>($"WeatherForecast/{UserInput}/{MinTemperature}/{MaxTemperature}");
+            StateHasChanged();
+        }
+        else
+        {
+            // Vis en fejlmeddelelse eller foretag en passende handling
+        }
     }
 
     
