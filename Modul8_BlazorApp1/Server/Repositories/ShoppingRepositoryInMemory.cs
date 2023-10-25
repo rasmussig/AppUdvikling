@@ -22,7 +22,11 @@ namespace Modul8_BlazorApp1.Server.Repositories
         {
             mProducts.RemoveAll((item) => item.Id == id);
         }
-
+        public void UpdateItem(ShoppingItem item)
+        {
+            DeleteById(item.Id);
+            mProducts.Add(item);
+        }
 
     }
     }

@@ -36,6 +36,13 @@ namespace Modul8_BlazorApp1.Server.Controllers
             mRepo.DeleteById(id);
 
         }
+
+        [HttpPut]
+        [Route("update")]
+        public void UpdateItem(ShoppingItem product)
+        {
+            mRepo.UpdateItem(product);
+        }
     }
 }
     
