@@ -1,0 +1,49 @@
+﻿@page "/jokepage"
+@using Modul8_BlazorApp1.Client.Model
+@inject HttpClient Http
+
+<h1>Joke of the day</h1>
+
+@if (currentJoke == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+        <strong>Setup:</strong> @currentJoke.Setup
+        <br />
+        <strong>Punchline:</strong> @currentJoke.Punchline
+    </div>
+    <br />
+    <button @onclick="LoadJoke">Stik mig en ny joke makker</button>
+}
+
+@code {
+    private Joke currentJoke;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadJoke();
+    }
+
+    private async Task LoadJoke()
+    {
+        currentJoke = await Http.GetFromJsonAsync<Joke>("https://official-joke-api.appspot.com/random_joke");
+        StateHasChanged(); // sikrer, at UI opdateres
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
