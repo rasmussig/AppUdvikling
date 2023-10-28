@@ -4,7 +4,7 @@ namespace Modul8_BlazorApp1.Server.Repositories
 {
         public class ShoppingRepositoryInMemory : IShoppingRepository
         {
-            private List<ShoppingItem> mProducts = new() {
+                private List<ShoppingItem> mProducts = new() {
                   new ShoppingItem { Id = 1, Name = "bananer", Price = 12, Done = true },
                   new ShoppingItem {Id = 2,  Name = "Æbler", Price = 14, Done = false  }
         };
@@ -16,7 +16,10 @@ namespace Modul8_BlazorApp1.Server.Repositories
             mProducts.Add(item);
             }
 
-            public ShoppingItem[] GetAll() => mProducts.ToArray();
+        public ShoppingItem[] GetAll()
+        {
+            return mProducts.ToArray();
+        }
 
         public void DeleteById(int id)
         {

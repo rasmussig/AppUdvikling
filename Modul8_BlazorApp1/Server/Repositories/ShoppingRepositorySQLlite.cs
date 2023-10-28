@@ -1,13 +1,18 @@
-﻿using Modul8_BlazorApp1.Shared;
+﻿using System;
+using System.Xml.Linq;
+using Modul8_BlazorApp1.Shared;
+using Microsoft.Data.Sqlite;
+using Modul8_BlazorApp1.Client.Pages;
+using Modul8_BlazorApp1.Server.Repositories;
 
 namespace Modul8_BlazorApp1.Server.Repositories
 {
-    public class IShoppingRepositorySQLite : IShoppingRepository
+    public class ShoppingRepositorySQLite : IShoppingRepository
     {
         private const string connectionString = @"Data Source=C:\Users\rasmu\OneDrive\Skrivebord\bikes.db";
-        // SKAL ÆNDRES
+        // SKAL ÆNDRES  
 
-        public IShoppingRepositorySQLite()
+        public ShoppingRepositorySQLite()
         {
         }
 
@@ -19,7 +24,7 @@ namespace Modul8_BlazorApp1.Server.Repositories
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = @"SELECT * FROM Bike";
+                command.CommandText = @"SELECT * FROM ShoppingItem";
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -27,16 +32,18 @@ namespace Modul8_BlazorApp1.Server.Repositories
                     {
                         var id = reader.GetInt32(0);
                         Console.WriteLine("Id=" + id);
-                        var brand = reader.GetString(1);
-                        var model = reader.GetString(2);
-                        var desc = reader.GetString(3);
-                        var price = reader.GetInt32(4);
-                        var imgUrl = reader.GetString(5);
+                        var Name = reader.GetString(1);
+                        var Price = reader.GetInt32(2);
+                        var Amount = reader.GetInt32(3);
+                        var Shop = reader.GetString(4);
+                        var Description = reader.GetString(5);
 
-                        BEBike b = new BEBike { Id = id, Brand = brand, Model = model, Description = desc, Price = price, ImageUrl = imgUrl };
+                        ShoppingItem b = new ShoppingItem { Id = id, Name = Name, Price = Price, Amount = Amount, Shop = Shop, Description = Description };
                         result.Add(b);
                     }
                 }
 
+            }
+        }
     }
 }
