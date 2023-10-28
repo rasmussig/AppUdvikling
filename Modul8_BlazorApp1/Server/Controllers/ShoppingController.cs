@@ -12,36 +12,27 @@ namespace Modul8_BlazorApp1.Server.Controllers
 
         public ShoppingController(IShoppingRepository repo)
         {
-            mRepo = repo;
+           this.mRepo = repo;
         }
 
         [HttpGet]
-        [Route("getall")]
         public IEnumerable<ShoppingItem> GetAll()
         {
             return mRepo.GetAll();
         }
 
         [HttpPost]
-        [Route("add")]
-        public void AddItem(ShoppingItem product)
+        public void AddItem(ShoppingItem item)
         {
-            mRepo.AddItem(product);
+            mRepo.AddItem(item);
         }
 
         [HttpDelete]
-        [Route("delete/{id:int}")]
+        [Route("{id:int}")]
         public void DeleteItem(int id)
         {
             mRepo.DeleteById(id);
 
-        }
-
-        [HttpPut]
-        [Route("update")]
-        public void UpdateItem(ShoppingItem product)
-        {
-            mRepo.UpdateItem(product);
         }
     }
 }

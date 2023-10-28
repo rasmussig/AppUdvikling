@@ -7,7 +7,6 @@ namespace Modul8_BlazorApp1.Server.Repositories
         ShoppingItem[] GetAll();
         void AddItem(ShoppingItem item);
         void DeleteById(int id);
-        void UpdateItem(ShoppingItem item);
 
     }
 }
