@@ -6,8 +6,8 @@ namespace Modul8_BlazorApp1.Server.Repositories
         public class ShoppingRepositoryInMemory : IShoppingRepository
         {
                 private static ShoppingItem[] Products = {
-                  new ShoppingItem {Id = 1, Name = "bananer", Price = 12, Done = true },
-                  new ShoppingItem {Id = 2,  Name = "Æbler", Price = 14, Done = false  }
+                  new ShoppingItem { Name = "bananer", Price = 12, Done = true },
+                  new ShoppingItem { Name = "Æbler", Price = 14, Done = false  }
         };
 
         private static List<ShoppingItem> mProducts = Products.ToList();
