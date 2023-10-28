@@ -9,8 +9,7 @@ namespace Modul8_BlazorApp1.Server.Repositories
 {
     public class ShoppingRepositorySQLite : IShoppingRepository
     {
-        private const string connectionString = @"Data Source=C:\Users\rasmu\OneDrive\Skrivebord\bikes.db";
-        // SKAL ÆNDRES  
+        private const string connectionString = @"Data Source=c:/Users/rasmu/OneDrive/Skrivebord/ShoppingItem.sqbpro";
 
         public ShoppingRepositorySQLite()
         {
