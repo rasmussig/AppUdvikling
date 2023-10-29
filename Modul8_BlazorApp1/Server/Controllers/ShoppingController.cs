@@ -16,23 +16,32 @@ namespace Modul8_BlazorApp1.Server.Controllers
         }
 
         [HttpGet]
+        [Route("getall")]
         public IEnumerable<ShoppingItem> GetAll()
         {
             return mRepo.GetAll();
         }
 
+
         [HttpPost]
-        public void AddItem(ShoppingItem item)
+        [Route("add")]
+        public void AddItem(ShoppingItem product)
         {
-            mRepo.AddItem(item);
+            mRepo.AddItem(product);
         }
 
         [HttpDelete]
-        [Route("{id:int}")]
+        [Route("delete/{id:int}")]
         public void DeleteItem(int id)
         {
             mRepo.DeleteById(id);
+        }
 
+        [HttpPut]
+        [Route("update")]
+        public void UpdateItem(ShoppingItem product)
+        {
+            mRepo.UpdateItem(product);
         }
     }
 }

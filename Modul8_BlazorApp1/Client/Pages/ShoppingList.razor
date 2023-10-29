@@ -3,55 +3,50 @@
 @using Modul8_BlazorApp1.Shared;
 @inject HttpClient Http;
 
+<h1>ShoppingList</h1>
 
-<h1 class="mb-3 mt-3">Shopping List</h1>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Shop</th>
-            <th>Amount</th>
-            <th>Price</th>
-            <th>Done</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
+@if (Products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
 
-    <tbody>
-        @foreach (var item in Products)
-        {
-            <tr>
-                <td>@item.Name</td>
-                <td>@item.Shop</td>
-                <td>@item.Amount</td>
-                <td>@item.Price</td>
-                <td>
-                    <InputCheckbox id="Done" @bind-Value="item.Done" class="form-check-input" />
+    <table class="table">
 
-                </td>
-                <td> <svg xmlns="http://www.w3.org/2000/svg" @onclick="() => DeleteItem(item)" width="24" height="24" viewBox="0 0 8 8"><path fill="#900" d="M4 0C1.79 0 0 1.79 0 4s1.79 4 4 4s4-1.79 4-4s-1.79-4-4-4zM2.5 1.78L4 3.28l1.5-1.5l.72.72L4.72 4l1.5 1.5l-.72.72L4 4.72l-1.5 1.5l-.72-.72L3.28 4l-1.5-1.5l.72-.72z" /></svg></td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <tbody>
+            @foreach (var ShoppingItem in Products)
+            {
+                <tr class="bikeRow">
+                    <td>
+                        <h2>@ShoppingItem.Name - @ShoppingItem.Price</h2>
+                        <button class="btn btn-primary" @onclick="() => DeleteItem(ShoppingItem)">Delete</button><br />
+                        Price: @ShoppingItem.Price kr.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<p><strong>Total price: @CalculateTotalPrice()</strong></p>
+
+
+}
 
 @code {
     private ShoppingItem[]? Products;
 
     protected override async Task OnInitializedAsync()
     {
-        Products = await Http.GetFromJsonAsync<ShoppingItem[]>("api/Shopping");
+        Products = await Http.GetFromJsonAsync<ShoppingItem[]>("api/Shopping/getall");
     }
 
     private decimal CalculateTotalPrice()
     {
         decimal sum = 0;
 
-        foreach (var item in Products)
+        foreach (var shoppingItem in Products)
         {
-            sum += item.Price * item.Amount;
+            sum += shoppingItem.Price * shoppingItem.Amount;
         }
         return sum;
     }
@@ -61,9 +56,9 @@
         return value ? "Yes" : "No";
     }
 
-    private async Task DeleteItem(ShoppingItem item)
+    private async Task DeleteItem(ShoppingItem shoppingItem)
     {
-        await Http.DeleteAsync($"api/Shopping{item.Id}");
+        await Http.DeleteAsync($"api/Shopping{shoppingItem.Id}");
 
         Products = await Http.GetFromJsonAsync<ShoppingItem[]>("api/Shopping");
 
