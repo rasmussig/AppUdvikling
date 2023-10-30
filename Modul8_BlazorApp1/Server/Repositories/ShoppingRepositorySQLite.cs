@@ -16,7 +16,19 @@ namespace Modul8_BlazorApp1.Server.Repositories
         }
         public void AddItem(ShoppingItem item)
         {
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
 
+                command.CommandText = @"INSERT INTO ShoppingItem (Name, Price, Amount, Shop, Description) VALUES ($name, $price, $amount, $shop, $desc)";
+                command.Parameters.AddWithValue("$name", item.Name);
+                command.Parameters.AddWithValue("$price", item.Price);
+                command.Parameters.AddWithValue("$amount", item.Amount);
+                command.Parameters.AddWithValue("$shop", item.Shop);
+                command.Parameters.AddWithValue("$desc", item.Description);
+                command.ExecuteNonQuery();
+            }
         }
         public void DeleteById(int id)
         {
