@@ -27,6 +27,14 @@
         <label for="Description">Description</label>
         <InputTextArea id="Description" @bind-Value="shoppingItem.Description" class="form-control" />
     </div>
+    <div class="col-md-6 mb-3">
+        <div class="form-check">
+            <InputCheckbox id="Done" @bind-Value="shoppingItem.Done" class="form-check-input" />
+            <label class="form-check-label" for="Done">
+                Is Done
+            </label>
+        </div>
+    </div>
 
     <div class="col-12 mb-3">
         <button type="submit" class="btn btn-primary">Add</button>
@@ -36,6 +44,7 @@
 
 @code {
     ShoppingItem shoppingItem = new ();
+    private ShoppingItem[]? shoppingList = new ShoppingItem[0];
 
     private EditContext aEditContext;
 
@@ -51,8 +60,9 @@
 
     private async Task AddShoppingItem()
     {
-        await Http.PostAsJsonAsync<ShoppingItem>("api/shopping", shoppingItem);
-
+        await Http.PostAsJsonAsync<ShoppingItem>("api/Shopping/add", shoppingItem);
+        Console.WriteLine("Klient: add " + shoppingItem.Name + " " + shoppingItem.Price);
+        shoppingList = await Http.GetFromJsonAsync<ShoppingItem[]>("api/Shopping/getall");
         shoppingItem = new(); // clear fields in form
     }
 

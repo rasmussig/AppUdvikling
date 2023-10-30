@@ -23,12 +23,13 @@ namespace Modul8_BlazorApp1.Server.Repositories
                 connection.Open();
                 var command = connection.CreateCommand();
 
-                command.CommandText = @"INSERT INTO ShoppingItem (Name, Price, Amount, Shop, Description) VALUES ($name, $price, $amount, $shop, $desc)";
+                command.CommandText = @"INSERT INTO ShoppingItem (Name, Price, Amount, Shop, Description, Done) VALUES ($name, $price, $amount, $shop, $desc, $done)";
                 command.Parameters.AddWithValue("$name", item.Name);
                 command.Parameters.AddWithValue("$price", item.Price);
                 command.Parameters.AddWithValue("$amount", item.Amount);
                 command.Parameters.AddWithValue("$shop", item.Shop);
                 command.Parameters.AddWithValue("$desc", item.Description);
+                command.Parameters.AddWithValue("$done", item.Done);
                 command.ExecuteNonQuery();
             }
         }
