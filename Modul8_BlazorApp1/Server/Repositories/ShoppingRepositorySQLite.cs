@@ -32,7 +32,15 @@ namespace Modul8_BlazorApp1.Server.Repositories
         }
         public void DeleteById(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+
+                command.CommandText = @"DELETE FROM ShoppingItem WHERE id = $id";
+                command.Parameters.AddWithValue("$id", id);
+                command.ExecuteNonQuery();
+            }
         }
 
         public ShoppingItem[] GetAll()
