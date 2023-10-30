@@ -4,6 +4,8 @@ using Modul8_BlazorApp1.Shared;
 using Microsoft.Data.Sqlite;
 using Modul8_BlazorApp1.Client.Pages;
 using Modul8_BlazorApp1.Server.Repositories;
+using System.Xml;
+using static System.Net.WebRequestMethods;
 
 namespace Modul8_BlazorApp1.Server.Repositories
 {
@@ -63,8 +65,10 @@ namespace Modul8_BlazorApp1.Server.Repositories
                         var Amount = reader.GetInt32(3);
                         var Shop = reader.GetString(4);
                         var Description = reader.GetString(5);
+                        var Done = reader.GetInt32(6) == 0 ? false : true;
 
-                        ShoppingItem b = new ShoppingItem { Id = Id, Name = Name, Price = Price, Amount = Amount, Shop = Shop, Description = Description };
+
+                        ShoppingItem b = new ShoppingItem { Id = Id, Name = Name, Price = Price, Amount = Amount, Shop = Shop, Description = Description, Done = Done };
                         result.Add(b);
                     }
                 }
@@ -74,7 +78,16 @@ namespace Modul8_BlazorApp1.Server.Repositories
         }
         public void UpdateItem(ShoppingItem item)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+
+                command.CommandText = @"UPDATE shoppingitem SET Done = $done WHERE id = $id";
+                command.Parameters.AddWithValue("$id", item.Id);
+                command.Parameters.AddWithValue("$done", item.Done ? 1 : 0);
+                command.ExecuteNonQuery();
+            }
         }
     }
 }
