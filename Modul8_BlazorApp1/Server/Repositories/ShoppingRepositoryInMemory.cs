@@ -4,7 +4,10 @@ namespace Modul8_BlazorApp1.Server.Repositories
 {
     public class ShoppingRepositoryInMemory : IShoppingRepository
     {
-        private static List<ShoppingItem> mProducts = new List<ShoppingItem>();
+        private List<ShoppingItem> mProducts = new() {
+                  new ShoppingItem { Id = 3, Name = "Tærte", Price = 39, Amount = 1, Description = "Den smager godt", Shop = "Bilka"  },
+                  new ShoppingItem { Id = 4, Name = "Æbler", Price = 14, Amount = 1, Description = "De er grønne", Shop = "Bilka"  }
+        };
 
         public void AddItem(ShoppingItem item)
         {
